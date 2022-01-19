@@ -19,7 +19,7 @@ public class ReceitaController {
     ReceitaService receitaService;
 
     @GetMapping(path = "/receitas")
-    public ResponseEntity<List<Receita>> findAll() {
+    public ResponseEntity<Iterable<Receita>> findAll() {
         return ResponseEntity.ok().body(receitaService.findAll());
     }
 

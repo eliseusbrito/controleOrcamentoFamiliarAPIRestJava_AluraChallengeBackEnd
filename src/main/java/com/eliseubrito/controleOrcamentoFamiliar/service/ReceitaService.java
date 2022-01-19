@@ -13,7 +13,7 @@ public class ReceitaService {
     @Autowired
     ReceitaRepository receitaRepository;
 
-    public List<Receita> findAll(){
+    public Iterable<Receita> findAll(){
         return receitaRepository.findAll();
     }
 

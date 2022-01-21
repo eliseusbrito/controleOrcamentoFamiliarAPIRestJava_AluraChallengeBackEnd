@@ -24,7 +24,7 @@ public class ReceitaController {
     }
 
     @PostMapping(path = "/receitas")
-    public ResponseEntity<?> postReceita(@RequestBody @Valid Receita receita) {
+    public ResponseEntity<?> postReceita(@RequestBody @Valid Receita receita) throws Exception {
         receita = receitaService.postReceita(receita);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(receita.getId()).toUri();

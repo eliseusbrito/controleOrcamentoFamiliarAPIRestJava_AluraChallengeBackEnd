@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Optional;
 
 @Service
 public class ReceitaService {
@@ -20,6 +21,10 @@ public class ReceitaService {
 
     public Iterable<Receita> findAll(){
         return receitaRepository.findAll();
+    }
+
+    public Optional<Receita> findById(Long id){
+        return receitaRepository.findById(id);
     }
 
     public Receita postReceita(Receita receita) throws Exception {

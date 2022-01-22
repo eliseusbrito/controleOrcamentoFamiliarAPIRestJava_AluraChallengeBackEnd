@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("v1")
@@ -21,6 +22,11 @@ public class ReceitaController {
     @GetMapping(path = "/receitas")
     public ResponseEntity<Iterable<Receita>> findAll() {
         return ResponseEntity.ok().body(receitaService.findAll());
+    }
+
+    @GetMapping(path = "/receitas/{id}")
+    public ResponseEntity<Optional<Receita>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(receitaService.findById(id));
     }
 
     @PostMapping(path = "/receitas")

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.temporal.TemporalAdjusters;
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DespesaService {
@@ -22,6 +22,10 @@ public class DespesaService {
 
     public Iterable findAll(){
         return despesaRepository.findAll();
+    }
+
+    public Optional<Despesa> findById(Long id){
+        return despesaRepository.findById(id);
     }
 
     public Despesa postDespesa(Despesa despesa) throws DescricaoDuplicadaException {

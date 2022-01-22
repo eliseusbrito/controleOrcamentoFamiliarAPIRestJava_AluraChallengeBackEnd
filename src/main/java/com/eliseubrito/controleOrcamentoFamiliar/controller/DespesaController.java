@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
+import java.util.Optional;
 import javax.validation.Valid;
 
 @RestController
@@ -22,6 +22,11 @@ public class DespesaController {
     @GetMapping(path = "/despesas")
     public ResponseEntity<Iterable<Despesa>> findAll() {
         return ResponseEntity.ok().body(despesaService.findAll());
+    }
+
+    @GetMapping(path = "/despesas/{id}")
+    public ResponseEntity<Optional<Despesa>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(despesaService.findById(id));
     }
 
     @PostMapping(path = "/despesas")

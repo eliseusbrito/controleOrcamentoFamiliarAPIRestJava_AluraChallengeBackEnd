@@ -19,11 +19,11 @@ public class ReceitaService {
     @Autowired
     ReceitaRepository receitaRepository;
 
-    public Iterable<Receita> findAll(){
+    public Iterable<Receita> findAll() {
         return receitaRepository.findAll();
     }
 
-    public Optional<Receita> findById(Long id){
+    public Optional<Receita> findById(Long id) {
         return receitaRepository.findById(id);
     }
 
@@ -40,6 +40,15 @@ public class ReceitaService {
             throw new DescricaoDuplicadaException(descricao, mes);
         }
         return receitaRepository.save(receita);
+    }
+
+    public Receita update(Long id, Receita receita) {
+        Optional<Receita> entity = receitaRepository.findById(id);
+        Receita _receita = entity.get();
+        _receita.setDescricao(receita.getDescricao());
+        _receita.setValor(receita.getValor());
+        _receita.setData(LocalDateTime.now());
+        return receitaRepository.save(_receita);
     }
 
 }

@@ -37,5 +37,9 @@ public class ReceitaController {
         return ResponseEntity.created(uri).body(receita);
     }
 
+    @PutMapping(path = "/receitas/{id}")
+    public ResponseEntity update(@PathVariable Long id, @RequestBody Receita receita) {
+        return ResponseEntity.ok().body(receitaService.update(id, receita));
+    }
 
 }

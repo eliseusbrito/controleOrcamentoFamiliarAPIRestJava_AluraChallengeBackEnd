@@ -1,9 +1,13 @@
 package com.eliseubrito.controleOrcamentoFamiliar.service;
 
+import com.eliseubrito.controleOrcamentoFamiliar.exception.DatabaseException;
 import com.eliseubrito.controleOrcamentoFamiliar.exception.DescricaoDuplicadaException;
+import com.eliseubrito.controleOrcamentoFamiliar.exception.ResourceNotFoundException;
 import com.eliseubrito.controleOrcamentoFamiliar.model.Receita;
 import com.eliseubrito.controleOrcamentoFamiliar.repository.ReceitaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -40,6 +44,16 @@ public class ReceitaService {
             throw new DescricaoDuplicadaException(descricao, mes);
         }
         return receitaRepository.save(receita);
+    }
+
+    public void delete(Long id) {
+        try {
+            receitaRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
 }

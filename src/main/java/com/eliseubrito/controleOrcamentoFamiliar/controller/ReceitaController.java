@@ -9,7 +9,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -35,6 +34,12 @@ public class ReceitaController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(receita.getId()).toUri();
         return ResponseEntity.created(uri).body(receita);
+    }
+
+    @DeleteMapping(value = "/receitas/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        receitaService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 

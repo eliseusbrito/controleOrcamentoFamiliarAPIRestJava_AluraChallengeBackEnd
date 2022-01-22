@@ -1,5 +1,6 @@
 package com.eliseubrito.controleOrcamentoFamiliar.controller;
 
+import com.eliseubrito.controleOrcamentoFamiliar.exception.DescricaoDuplicadaException;
 import com.eliseubrito.controleOrcamentoFamiliar.model.Despesa;
 import com.eliseubrito.controleOrcamentoFamiliar.service.DespesaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class DespesaController {
     }
 
     @PostMapping(path = "/despesas")
-    public ResponseEntity<?> postDespesa(@RequestBody @Valid Despesa despesa) {
+    public ResponseEntity<?> postDespesa(@RequestBody @Valid Despesa despesa) throws DescricaoDuplicadaException {
         despesa = despesaService.postDespesa(despesa);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(despesa.getId()).toUri();

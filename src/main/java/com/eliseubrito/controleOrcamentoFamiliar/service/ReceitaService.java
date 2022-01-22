@@ -28,6 +28,35 @@ public class ReceitaService {
     }
 
     public Receita postReceita(Receita receita) throws Exception {
+        Receita existente = verifyConditions(receita);
+        if (existente != null) {
+            String descricao = existente.getDescricao();
+            Month mes = existente.getData().getMonth();
+            throw new DescricaoDuplicadaException(descricao, mes);
+        }
+        return receitaRepository.save(receita);
+    }
+
+    public Receita update(Long id, Receita receita) throws DescricaoDuplicadaException {
+        Optional<Receita> entity = receitaRepository.findById(id);
+        Receita existente = new Receita();
+        if(entity.isPresent()){
+            existente = verifyConditions(receita);
+        }
+        if (existente != null) {
+            String descricao = existente.getDescricao();
+            Month mes = existente.getData().getMonth();
+            throw new DescricaoDuplicadaException(descricao, mes);
+        } else {
+            Receita _receita = entity.get();
+            _receita.setDescricao(receita.getDescricao());
+            _receita.setValor(receita.getValor());
+            _receita.setData(receita.getData());
+            return receitaRepository.save(_receita);
+        }
+    }
+
+    private Receita verifyConditions(Receita receita) {
         String descricao = receita.getDescricao();
         LocalDateTime data = receita.getData();
         int month = data.getMonthValue();
@@ -35,20 +64,8 @@ public class ReceitaService {
         Month mes = data.getMonth();
         LocalDateTime dateStart = LocalDateTime.now().with(LocalDateTime.of(LocalDate.MIN, LocalTime.MIN)).withMonth(month).withYear(year).with(TemporalAdjusters.firstDayOfMonth());
         LocalDateTime dateEnd = LocalDateTime.now().with(LocalDateTime.of(LocalDate.MAX, LocalTime.MAX)).withMonth(month).withYear(year).with(TemporalAdjusters.lastDayOfMonth());
-        Receita existente =  receitaRepository.findByDescricaoAndMes(descricao, dateStart, dateEnd);
-        if (existente != null){
-            throw new DescricaoDuplicadaException(descricao, mes);
-        }
-        return receitaRepository.save(receita);
-    }
-
-    public Receita update(Long id, Receita receita) {
-        Optional<Receita> entity = receitaRepository.findById(id);
-        Receita _receita = entity.get();
-        _receita.setDescricao(receita.getDescricao());
-        _receita.setValor(receita.getValor());
-        _receita.setData(LocalDateTime.now());
-        return receitaRepository.save(_receita);
+        Receita existente = receitaRepository.findByDescricaoAndMes(descricao, dateStart, dateEnd);
+        return existente;
     }
 
 }

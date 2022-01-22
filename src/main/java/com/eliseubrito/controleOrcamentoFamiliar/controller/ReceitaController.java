@@ -1,5 +1,6 @@
 package com.eliseubrito.controleOrcamentoFamiliar.controller;
 
+import com.eliseubrito.controleOrcamentoFamiliar.exception.DescricaoDuplicadaException;
 import com.eliseubrito.controleOrcamentoFamiliar.model.Receita;
 import com.eliseubrito.controleOrcamentoFamiliar.service.ReceitaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class ReceitaController {
     }
 
     @PutMapping(path = "/receitas/{id}")
-    public ResponseEntity update(@PathVariable Long id, @RequestBody Receita receita) {
+    public ResponseEntity update(@PathVariable Long id, @RequestBody Receita receita) throws DescricaoDuplicadaException {
         return ResponseEntity.ok().body(receitaService.update(id, receita));
     }
 

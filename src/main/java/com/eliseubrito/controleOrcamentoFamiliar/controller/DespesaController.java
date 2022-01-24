@@ -37,5 +37,11 @@ public class DespesaController {
         return ResponseEntity.created(uri).body(despesa);
     }
 
+    @DeleteMapping(value = "/despesas/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        despesaService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 
 }

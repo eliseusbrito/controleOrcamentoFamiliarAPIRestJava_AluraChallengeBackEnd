@@ -1,5 +1,6 @@
 package com.eliseubrito.controleOrcamentoFamiliar.service;
 
+import com.eliseubrito.controleOrcamentoFamiliar.enuns.Categoria;
 import com.eliseubrito.controleOrcamentoFamiliar.exception.DatabaseException;
 import com.eliseubrito.controleOrcamentoFamiliar.exception.DescricaoDuplicadaException;
 import com.eliseubrito.controleOrcamentoFamiliar.exception.ResourceNotFoundException;
@@ -37,6 +38,9 @@ public class DespesaService {
             String descricao = existente.getDescricao();
             Month mes = existente.getData().getMonth();
             throw new DescricaoDuplicadaException(descricao, mes);
+        }
+        if (despesa.getCategoria() == null){
+            despesa.setCategoria(Categoria.OUTRAS);
         }
         return despesaRepository.save(despesa);
     }

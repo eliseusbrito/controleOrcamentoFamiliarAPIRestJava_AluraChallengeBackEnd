@@ -1,5 +1,6 @@
 package com.eliseubrito.controleOrcamentoFamiliar.model;
 
+import com.eliseubrito.controleOrcamentoFamiliar.enuns.Categoria;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,5 +29,6 @@ public class Despesa implements Serializable {
     private double valor;
     @NotNull
     private LocalDateTime data;
+    private Categoria categoria;
 
 }

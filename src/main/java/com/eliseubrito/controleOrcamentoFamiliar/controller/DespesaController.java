@@ -37,6 +37,11 @@ public class DespesaController {
         return ResponseEntity.created(uri).body(despesa);
     }
 
+    @PutMapping(path = "/despesas/{id}")
+    public ResponseEntity update(@PathVariable Long id, @RequestBody Despesa despesa) throws DescricaoDuplicadaException {
+        return ResponseEntity.ok().body(despesaService.update(id, despesa));
+    }
+
     @DeleteMapping(value = "/despesas/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         despesaService.delete(id);

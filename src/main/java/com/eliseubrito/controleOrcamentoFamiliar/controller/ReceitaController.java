@@ -36,7 +36,7 @@ public class ReceitaController {
     }
 
     @GetMapping(path = "/receitas/{ano}/{mes}")
-    public ResponseEntity<List<Receita>> findById(@PathVariable Integer ano, @PathVariable Integer mes) {
+    public ResponseEntity<List<Receita>> findByMes(@PathVariable Integer ano, @PathVariable Integer mes) {
         return ResponseEntity.ok().body(receitaService.findByMes(ano, mes));
     }
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
 
@@ -27,6 +28,11 @@ public class DespesaController {
     @GetMapping(path = "/despesas/{id}")
     public ResponseEntity<Optional<Despesa>> findById(@PathVariable Long id) {
         return ResponseEntity.ok().body(despesaService.findById(id));
+    }
+
+    @GetMapping(path = "/despesas", params = "descricao")
+    public ResponseEntity<List<Despesa>> findByDescricao(@RequestParam String descricao) {
+        return ResponseEntity.ok().body(despesaService.findByDescricao(descricao));
     }
 
     @PostMapping(path = "/despesas")

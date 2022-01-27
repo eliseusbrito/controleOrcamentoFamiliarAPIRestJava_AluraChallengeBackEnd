@@ -35,6 +35,11 @@ public class DespesaController {
         return ResponseEntity.ok().body(despesaService.findByDescricao(descricao));
     }
 
+    @GetMapping(path = "/despesas/{ano}/{mes}")
+    public ResponseEntity<List<Despesa>> findByMes(@PathVariable Integer ano, @PathVariable Integer mes) {
+        return ResponseEntity.ok().body(despesaService.findByMes(ano, mes));
+    }
+
     @PostMapping(path = "/despesas")
     public ResponseEntity<?> postDespesa(@RequestBody @Valid Despesa despesa) throws DescricaoDuplicadaException {
         despesa = despesaService.postDespesa(despesa);

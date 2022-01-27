@@ -16,4 +16,7 @@ public interface DespesaRepository extends CrudRepository<Despesa, Long> {
 
     List<Despesa> findByDescricaoIgnoreCaseContaining(String descricao);
 
+    @Query(value = "SELECT d FROM Despesa d where d.data between ?1 and ?2")
+    List<Despesa> findByAnoAndMes(LocalDateTime startDate, LocalDateTime endDate);
+
 }

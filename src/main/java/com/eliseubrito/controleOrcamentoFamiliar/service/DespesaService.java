@@ -37,6 +37,12 @@ public class DespesaService {
         return despesaRepository.findByDescricaoIgnoreCaseContaining(descricao);
     }
 
+    public List<Despesa> findByMes(Integer ano, Integer mes) {
+        LocalDateTime startDate = LocalDateTime.now().with(LocalDateTime.of(LocalDate.MIN, LocalTime.MIN)).withMonth(mes).withYear(ano).with(TemporalAdjusters.firstDayOfMonth());
+        LocalDateTime endDate = LocalDateTime.now().with(LocalDateTime.of(LocalDate.MAX, LocalTime.MAX)).withMonth(mes).withYear(ano).with(TemporalAdjusters.lastDayOfMonth());
+        return despesaRepository.findByAnoAndMes(startDate, endDate);
+    }
+
     public Despesa postDespesa(Despesa despesa) throws DescricaoDuplicadaException {
         Despesa existente = verifyConditions(despesa);
         if (existente != null){

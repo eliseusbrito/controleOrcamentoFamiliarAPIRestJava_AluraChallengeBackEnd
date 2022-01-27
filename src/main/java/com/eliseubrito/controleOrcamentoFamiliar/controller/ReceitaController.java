@@ -35,6 +35,11 @@ public class ReceitaController {
         return ResponseEntity.ok().body(receitaService.findByDescricao(descricao));
     }
 
+    @GetMapping(path = "/receitas/{ano}/{mes}")
+    public ResponseEntity<List<Receita>> findById(@PathVariable Integer ano, @PathVariable Integer mes) {
+        return ResponseEntity.ok().body(receitaService.findByMes(ano, mes));
+    }
+
     @PostMapping(path = "/receitas")
     public ResponseEntity<?> postReceita(@RequestBody @Valid Receita receita) throws Exception {
         receita = receitaService.postReceita(receita);

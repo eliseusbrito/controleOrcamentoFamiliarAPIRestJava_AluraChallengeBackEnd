@@ -16,4 +16,7 @@ public interface ReceitaRepository extends CrudRepository<Receita, Long> {
 
     List<Receita> findByDescricaoIgnoreCaseContaining(String descricao);
 
+    @Query(value = "SELECT r FROM Receita r where r.data between ?1 and ?2")
+    List<Receita> findByAnoAndMes(LocalDateTime startDate, LocalDateTime endDate);
+
 }

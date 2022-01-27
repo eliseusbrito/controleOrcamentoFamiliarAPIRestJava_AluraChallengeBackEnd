@@ -36,6 +36,12 @@ public class ReceitaService {
         return receitaRepository.findByDescricaoIgnoreCaseContaining(descricao);
     }
 
+    public List<Receita> findByMes(Integer ano, Integer mes) {
+        LocalDateTime startDate = LocalDateTime.now().with(LocalDateTime.of(LocalDate.MIN, LocalTime.MIN)).withMonth(mes).withYear(ano).with(TemporalAdjusters.firstDayOfMonth());
+        LocalDateTime endDate = LocalDateTime.now().with(LocalDateTime.of(LocalDate.MAX, LocalTime.MAX)).withMonth(mes).withYear(ano).with(TemporalAdjusters.lastDayOfMonth());
+        return receitaRepository.findByAnoAndMes(startDate, endDate);
+    }
+
     public Receita postReceita(Receita receita) throws Exception {
         Receita existente = verifyConditions(receita);
         if (existente != null) {

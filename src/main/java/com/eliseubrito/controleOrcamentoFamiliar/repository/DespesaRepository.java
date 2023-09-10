@@ -1,6 +1,7 @@
 package com.eliseubrito.controleOrcamentoFamiliar.repository;
 
 import com.eliseubrito.controleOrcamentoFamiliar.model.Despesa;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -18,5 +19,7 @@ public interface DespesaRepository extends CrudRepository<Despesa, Long> {
 
     @Query(value = "SELECT d FROM Despesa d where d.data between ?1 and ?2")
     List<Despesa> findByAnoAndMes(LocalDateTime startDate, LocalDateTime endDate);
+
+    List<Despesa> findAll(Specification<Despesa> specification);
 
 }

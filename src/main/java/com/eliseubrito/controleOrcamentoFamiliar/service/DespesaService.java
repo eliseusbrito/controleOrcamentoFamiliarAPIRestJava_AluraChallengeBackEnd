@@ -9,17 +9,25 @@ import com.eliseubrito.controleOrcamentoFamiliar.repository.DespesaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
+import javax.persistence.criteria.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class DespesaService {
 
     @Autowired
@@ -95,6 +103,14 @@ public class DespesaService {
         LocalDateTime dateEnd = LocalDateTime.now().with(LocalDateTime.of(LocalDate.MAX, LocalTime.MAX)).withMonth(month).withYear(year).with(TemporalAdjusters.lastDayOfMonth());
         Despesa existente = despesaRepository.findByDescricaoAndMes(descricao, dateStart, dateEnd);
         return existente;
+    }
+
+    public List<Despesa> findDespesasByParameters(Long id, String descricao, Double valor, String dataString, String categoriaString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+        Categoria categoria = Categoria.ALIMENTAÇÃO;
+        LocalDateTime data = LocalDateTime.parse(dataString, formatter);
+        Specification<Despesa> specification = DespesaSpecifications.searchByParameters(id, descricao, valor, data, categoria);
+        return despesaRepository.findAll(specification);
     }
 
 }

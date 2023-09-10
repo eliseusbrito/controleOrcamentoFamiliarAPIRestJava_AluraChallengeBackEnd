@@ -1,5 +1,6 @@
 package com.eliseubrito.controleOrcamentoFamiliar.controller;
 
+import com.eliseubrito.controleOrcamentoFamiliar.enuns.Categoria;
 import com.eliseubrito.controleOrcamentoFamiliar.exception.DescricaoDuplicadaException;
 import com.eliseubrito.controleOrcamentoFamiliar.model.Despesa;
 import com.eliseubrito.controleOrcamentoFamiliar.service.DespesaService;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -38,6 +41,11 @@ public class DespesaController {
     @GetMapping(path = "/despesas/{ano}/{mes}")
     public ResponseEntity<List<Despesa>> findByMes(@PathVariable Integer ano, @PathVariable Integer mes) {
         return ResponseEntity.ok().body(despesaService.findByMes(ano, mes));
+    }
+
+    @GetMapping(path = "/despesas-filter")
+    public ResponseEntity<List<Despesa>> findDespesasByParameters(@RequestParam Long id, @RequestParam String descricao, @RequestParam Double valor, @RequestParam String data, @RequestParam String categoria) {
+        return ResponseEntity.ok().body(despesaService.findDespesasByParameters(id, descricao, valor, data, categoria));
     }
 
     @PostMapping(path = "/despesas")
